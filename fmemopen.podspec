@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "fmemopen"
   s.version      = "1.0.0"
-  s.summary      = "fmemopen port for iOS and Mac OS X"
+  s.summary      = "The utility fmemopen ported for iOS and Mac OS X."
   s.homepage     = "https://github.com/lemurs/fmemopen"
   s.license      = { :type => 'Apache', :file => 'LICENSE' }
   s.author       = { "jverkoey" => "verkoey@gmail.com" }
