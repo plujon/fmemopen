@@ -8,6 +8,6 @@ Pod::Spec.new do |s|
   s.authors      = { "jverkoey" => "verkoey@gmail.com" }
   s.source       = { :git => "https://github.com/lemurs/fmemopen.git", :tag => "v1.0.0" }
   s.ios.deployment_target = '7.0'
-  s.source_files = '**/'
+  s.source_files = '../*'
   s.requires_arc = true
 end
