@@ -55,7 +55,7 @@
 #include <errno.h>
 #include <assert.h>
 
-#define min(X, Y) (((X) < (Y)) ? (X) : (Y))
+#define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
 
 struct memstream
 {
@@ -100,7 +100,7 @@ static int memstream_grow(struct memstream *ms, int minsize)
 static int memstream_read(void *cookie, char *buf, int count)
 {
     struct memstream *ms= (struct memstream *)cookie;			memstream_check(ms);
-    int n= min(ms->size - ms->position, count);				memstream_info(("memstream_read %p %i\n", ms, count));
+    int n= MIN(ms->size - ms->position, count);				memstream_info(("memstream_read %p %i\n", ms, count));
     if (n < 1) return 0;
     memcpy(buf, ms->contents, n);
     ms->position += n;							memstream_print(ms);
@@ -142,7 +142,7 @@ static fpos_t memstream_seek(void *cookie, fpos_t offset, int whence)
 static int memstream_close(void *cookie)
 {
     struct memstream *ms= (struct memstream *)cookie;			if (!ms->contents) { free(ms);  errno= ENOMEM;  return -1; }
-    ms->size= min(ms->size, ms->position);
+    ms->size= MIN(ms->size, ms->position);
     *ms->ptr= ms->contents;
     *ms->sizeloc= ms->size;						assert(ms->size < ms->capacity);
     ms->contents[ms->size]= 0;
