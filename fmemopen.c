@@ -28,7 +28,7 @@ struct fmem {
 typedef struct fmem fmem_t;
 
 static int readfn(void *handler, char *buf, int size) {
-  fmem_t *mem = handler;
+  fmem_t *mem = (fmem_t *)handler;
   size_t available = mem->size - mem->pos;
   
   if (size > available) {
@@ -41,7 +41,7 @@ static int readfn(void *handler, char *buf, int size) {
 }
 
 static int writefn(void *handler, const char *buf, int size) {
-  fmem_t *mem = handler;
+  fmem_t *mem = (fmem_t *)handler;
   size_t available = mem->size - mem->pos;
 
   if (size > available) {
@@ -55,7 +55,7 @@ static int writefn(void *handler, const char *buf, int size) {
 
 static fpos_t seekfn(void *handler, fpos_t offset, int whence) {
   size_t pos;
-  fmem_t *mem = handler;
+  fmem_t *mem = (fmem_t *)handler;
 
   switch (whence) {
     case SEEK_SET: pos = offset; break;
@@ -85,7 +85,7 @@ FILE *fmemopen(void *buf, size_t size, const char *mode) {
   memset(mem, 0, sizeof(fmem_t));
 
   mem->size = size;
-  mem->buffer = buf;
+  mem->buffer = (char *)buf;
 
   // funopen's man page: https://developer.apple.com/library/mac/#documentation/Darwin/Reference/ManPages/man3/funopen.3.html
   return funopen(mem, readfn, writefn, seekfn, closefn);
